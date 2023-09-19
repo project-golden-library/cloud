@@ -9,6 +9,14 @@ readme = "README.md"
 python = "^3.11"
 
 
+[tool.poetry.group.dev.dependencies]
+isort = "^5.12.0"
+black = "^23.9.1"
+boto3 = "1.28.50"
+boto3-stubs = {version = "1.28.50", extras = ["dynamodb", "s3", "sqs"]}
+# arn:aws:lambda:ap-northeast-1:017000801446:layer:AWSLambdaPowertoolsPythonV2-Arm64:43
+aws-lambda-powertools = "2.24.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

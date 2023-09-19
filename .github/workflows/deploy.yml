@@ -1,0 +1,33 @@
+name: deploy
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  SAM_ARTIFACT_BUCKET: ${{ secrets.SAM_ARTIFACT_BUCKET }}
+  ROLE_CLOUDFORMATION_DEPLOY: ${{ secrets.ROLE_CLOUDFORMATION_DEPLOY }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: ${{ secrets.ROLE_GITHUB_ACTIONS_CLOUDFORMATION_DEPLOY }}
+          aws-region: us-east-1
+      - uses: aws-actions/setup-sam@v2
+      - run: make build
+      - run: make package
+      - run: tar cf cloud.tar *
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cloud.tar
+          path: cloud.tar
+      - run: make deploy
