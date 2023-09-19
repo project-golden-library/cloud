@@ -23,7 +23,6 @@ jobs:
           role-to-assume: ${{ secrets.ROLE_GITHUB_ACTIONS_CLOUDFORMATION_DEPLOY }}
           aws-region: us-east-1
       - uses: aws-actions/setup-sam@v2
-      - run: make build
       - run: make package
       - run: tar cf cloud.tar *
       - uses: actions/upload-artifact@v3
