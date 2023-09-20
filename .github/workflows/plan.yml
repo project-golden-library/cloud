@@ -14,7 +14,7 @@ env:
   ROLE_CLOUDFORMATION_DEPLOY: ${{ secrets.ROLE_CLOUDFORMATION_DEPLOY }}
 
 jobs:
-  deploy:
+  plan:
     runs-on: ubuntu-22.04
     concurrency: terraform
     steps:
@@ -32,7 +32,7 @@ jobs:
         with:
           name: cloud.tar
           path: cloud.tar
-      - name: deploy
+      - name: plan
         working-directory: terraform/environment
         run: |
           terraform init

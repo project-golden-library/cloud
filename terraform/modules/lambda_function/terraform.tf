@@ -19,11 +19,11 @@ variable "role_arn" {
   type = string
 }
 
-variable "artifact_bucket" {
+variable "artifact_s3_bucket" {
   type = string
 }
 
-variable "artifact_key" {
+variable "artifact_s3_key" {
   type = string
 }
 
@@ -38,8 +38,9 @@ variable "timeout" {
 }
 
 variable "reserved_concurrent_executions" {
-  type    = optional(number)
-  default = null
+  type     = number
+  nullable = true
+  default  = null
 }
 
 variable "environment_variables" {
@@ -49,5 +50,5 @@ variable "environment_variables" {
 
 variable "layers" {
   type    = list(string)
-  default = null
+  default = []
 }
