@@ -8,5 +8,5 @@ resource "aws_dynamodb_table" "urls" {
     type = "S"
   }
 
-  tags = null
+  tags = var.test_tag
 }
