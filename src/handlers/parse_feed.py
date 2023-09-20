@@ -50,8 +50,8 @@ def insert_urls(*, urls: List[str], table_name: str, ddb_client: DynamoDBClient)
             option = {
                 "TableName": table_name,
                 "Item": {"url": {"S": u}},
-                "ConditionExpression": "attribute_not_exists(#id)",
-                "ExpressionAttributeNames": {"#id": "id"},
+                "ConditionExpression": "attribute_not_exists(#url)",
+                "ExpressionAttributeNames": {"#url": "url"},
             }
         except ddb_client.exceptions.ConditionalCheckFailedException:
             pass
