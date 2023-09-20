@@ -1,6 +1,7 @@
-from typing import TypeVar, Type
 import os
 from dataclasses import fields
+from typing import Type, TypeVar
+
 from utils import create_logger, logging_function
 
 logger = create_logger(__name__)

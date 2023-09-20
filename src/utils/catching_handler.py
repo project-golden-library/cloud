@@ -1,6 +1,7 @@
-from aws_lambda_powertools import Logger
-from typing import Callable
 from functools import wraps
+from typing import Callable
+
+from aws_lambda_powertools import Logger
 
 
 def catching_handler(logger: Logger) -> Callable:

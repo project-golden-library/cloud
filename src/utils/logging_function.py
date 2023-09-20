@@ -1,6 +1,7 @@
 from functools import wraps
-from aws_lambda_powertools import Logger
 from typing import Callable
+
+from aws_lambda_powertools import Logger
 
 
 def logging_function(logger: Logger, log_return: bool = False) -> Callable:

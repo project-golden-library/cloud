@@ -8,24 +8,15 @@ black:
 isort:
 	poetry run isort src
 
-format: isort black
+tf-format-environment:
+	cd terraform/environment && \
+	terraform fmt
 
-package:
-	date > src/date.txt
-	aws cloudformation package \
-		--s3-bucket ${SAM_ARTIFACT_BUCKET} \
-		--s3-prefix $(stack_name) \
-		--template-file sam.yml \
-		--output-template-file template.yml
+tf-format-modules-root:
+	cd terraform/modules/root && \
+	terraform fmt
 
-deploy:
-	sam deploy \
-		--stack-name $(stack_name) \
-		--template-file template.yml \
-		--role-arn ${ROLE_CLOUDFORMATION_DEPLOY} \
-		--capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND \
-		--no-fail-on-empty-changeset
-
+format: isort black tf-format-environment tf-format-modules-root
 
 describe:
 	aws cloudformation describe-stacks \
@@ -35,6 +26,8 @@ describe:
 .PHONY: \
 	black \
 	isort \
+	tf-format-environment \
+	tf-format-modules-root \
 	format \
 	package \
 	deploy \
