@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 env:
-  SAM_ARTIFACT_BUCKET: ${{ secrets.SAM_ARTIFACT_BUCKET }}
+  TF_VAR_ARTIFACT_BUCKET: ${{ secrets.SAM_ARTIFACT_BUCKET }}
   ROLE_CLOUDFORMATION_DEPLOY: ${{ secrets.ROLE_CLOUDFORMATION_DEPLOY }}
 
 jobs:
@@ -20,13 +20,19 @@ jobs:
       - uses: actions/checkout@v3
       - uses: aws-actions/configure-aws-credentials@v1-node16
         with:
-          role-to-assume: ${{ secrets.ROLE_GITHUB_ACTIONS_CLOUDFORMATION_DEPLOY }}
+          role-to-assume: ${{ secrets.ROLE_TERRAFORM_DEPLOY }}
           aws-region: us-east-1
-      - uses: aws-actions/setup-sam@v2
-      - run: make package
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7
+          cli_config_credentials_token: ${{ secrets.TF_CLOUD_TOKEN }}
       - run: tar cf cloud.tar *
       - uses: actions/upload-artifact@v3
         with:
           name: cloud.tar
           path: cloud.tar
-      - run: make deploy
+      - name: deploy
+        working-directory: terraform/environment
+        run: |
+          terraform init
+          terraform apply -auto-approve
