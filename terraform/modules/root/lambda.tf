@@ -16,7 +16,7 @@ module "parse_feed" {
 
 resource "aws_cloudwatch_event_rule" "parse_feed" {
   description         = "call lambda function parse_feed"
-  schedule_expression = "rate(3 minutes)"
+  schedule_expression = "rate(30 minutes)"
   is_enabled          = true
 }
 

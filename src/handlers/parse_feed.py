@@ -18,6 +18,12 @@ class EnvironmentVariables:
     dynamodb_table_name: str
 
 
+@dataclass
+class Entry:
+    url: str
+    updated_at: str
+
+
 FEED_URL = "https://e-hentai.org/rss/ehg.xml"
 
 logger = create_logger(__name__)
@@ -38,6 +44,14 @@ def handler(
 @logging_function(logger=logger)
 def get_urls() -> List[str]:
     feed = feedparser.parse(FEED_URL)
+    logger.debug(
+        "updated samples",
+        extra={
+            "additional_data": sorted(
+                [f"{x['updated']}={x['link']}" for x in feed.get("entries", [])]
+            )
+        },
+    )
     return [x["link"] for x in feed.get("entries", [])]
 
 
