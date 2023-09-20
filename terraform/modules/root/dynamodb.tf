@@ -7,4 +7,6 @@ resource "aws_dynamodb_table" "urls" {
     name = "url"
     type = "S"
   }
+
+  tags = null
 }
