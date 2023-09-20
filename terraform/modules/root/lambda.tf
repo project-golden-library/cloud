@@ -10,5 +10,5 @@ module "parse_feed" {
   environment_variables = {
     DYNAMODB_TABLE_NAME = aws_dynamodb_table.urls.name
   }
-  layers = [data.aws_ssm_parameter.feedparser_layer_arn.arn]
+  layers = [data.aws_ssm_parameter.feedparser_layer_arn.value]
 }
