@@ -7,9 +7,6 @@ terraform {
   }
 }
 
-variable "artifact_bucket" {}
-
-variable "test_tag" {
-  type = map(string)
-  default = {}
+variable "artifact_bucket" {
+  type = string
 }

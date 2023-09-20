@@ -16,7 +16,19 @@ tf-format-modules-root:
 	cd terraform/modules/root && \
 	terraform fmt
 
-format: isort black tf-format-environment tf-format-modules-root
+tf-format-modules-lambda-function:
+	cd terraform/modules/lambda_function && \
+	terraform fmt
+
+tf-format: \
+	tf-format-environment \
+	tf-format-modules-root \
+	tf-format-modules-lambda-function \
+
+format: \
+	isort \
+	black \
+	tf-format
 
 describe:
 	aws cloudformation describe-stacks \
