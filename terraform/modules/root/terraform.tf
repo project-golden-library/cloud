@@ -8,3 +8,8 @@ terraform {
 }
 
 variable "artifact_bucket" {}
+
+variable "test_tag" {
+  type = optional(map(string))
+  default = null
+}
