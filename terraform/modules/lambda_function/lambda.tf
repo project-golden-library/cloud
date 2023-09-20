@@ -13,7 +13,7 @@ resource "aws_lambda_function" "function" {
   reserved_concurrent_executions = var.reserved_concurrent_executions
   layers = concat(
     [
-      "arn:aws:lambda:ap-northeast-1:017000801446:layer:AWSLambdaPowertoolsPythonV2-Arm64:43",
+      "arn:aws:lambda:us-east-1:017000801446:layer:AWSLambdaPowertoolsPythonV2-Arm64:43",
       data.aws_ssm_parameter.base_layer_arn.value
     ],
     var.layers
