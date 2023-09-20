@@ -38,8 +38,9 @@ variable "timeout" {
 }
 
 variable "reserved_concurrent_executions" {
-  type    = optional(number)
-  default = null
+  type     = number
+  nullable = true
+  default  = null
 }
 
 variable "environment_variables" {
