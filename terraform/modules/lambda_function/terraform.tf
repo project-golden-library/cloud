@@ -8,23 +8,33 @@ terraform {
 }
 
 variable "function_name" {
-  type = string
+  type     = string
+  nullable = false
 }
 
 variable "handler" {
-  type = string
+  type     = string
+  nullable = false
 }
 
 variable "role_arn" {
-  type = string
+  type     = string
+  nullable = false
 }
 
 variable "artifact_s3_bucket" {
-  type = string
+  type     = string
+  nullable = false
 }
 
 variable "artifact_s3_key" {
-  type = string
+  type     = string
+  nullable = false
+}
+
+variable "source_code_hash" {
+  type     = string
+  nullable = false
 }
 
 variable "memory_size" {

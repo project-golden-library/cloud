@@ -5,8 +5,9 @@ resource "aws_lambda_function" "function" {
   runtime       = "python3.11"
   publish       = true
 
-  s3_bucket = var.artifact_s3_bucket
-  s3_key    = var.artifact_s3_key
+  s3_bucket        = var.artifact_s3_bucket
+  s3_key           = var.artifact_s3_key
+  source_code_hash = var.source_code_hash
 
   memory_size                    = var.memory_size
   timeout                        = var.timeout
