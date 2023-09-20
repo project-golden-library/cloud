@@ -10,7 +10,7 @@ def catching_handler(logger: Logger) -> Callable:
         def process(event, *args, **kwargs):
             try:
                 logger.debug("event data", extra={"additional_data": event})
-                return func(*args, **kwargs)
+                return func(event, *args, **kwargs)
             except Exception as e:
                 logger.error(
                     f"error occurred in handler: ({type(e)}) {e}", exc_info=True
