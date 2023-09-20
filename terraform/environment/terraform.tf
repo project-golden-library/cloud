@@ -25,9 +25,6 @@ module "root" {
   source = "../modules/root"
 
   artifact_bucket = var.ARTIFACT_BUCKET
-  test_tag = {
-    data = "sinofseven"
-  }
 }
 
 variable "ARTIFACT_BUCKET" {}
