@@ -1,8 +1,8 @@
-name: deploy
+name: plan
 
 on:
   push:
-    branches:
+    branches-ignore:
       - master
 
 permissions:
@@ -36,4 +36,4 @@ jobs:
         working-directory: terraform/environment
         run: |
           terraform init
-          terraform apply -auto-approve
+          terraform plan
