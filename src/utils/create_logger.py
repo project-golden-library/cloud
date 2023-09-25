@@ -25,7 +25,7 @@ def custom_default(obj):
     if isinstance(obj, ConditionBase):
         return obj.get_expression()
     if isinstance(obj, AttributeBase):
-        return obj.name
+        return obj.name  # type: ignore
     if is_dataclass(obj):
         return str(obj) if isinstance(obj, Type) else asdict(obj)
     if isinstance(obj, HTTPResponse):

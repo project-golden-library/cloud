@@ -10,17 +10,13 @@ CONFIG_DEFAULT = Config(
 )
 
 
-def create_boto3_client(
-    *, service: str, config: Optional[Config] = None, **kwargs
-) -> BaseClient:
+def create_boto3_client(*, service: str, config: Optional[Config] = None, **kwargs):
     return boto3.client(
-        service_name=service, config=config if config else CONFIG_DEFAULT, **kwargs
+        service_name=service, config=config if config else CONFIG_DEFAULT, **kwargs  # type: ignore
     )
 
 
-def create_boto3_resource(
-    *, service: str, config: Optional[Config] = None, **kwargs
-) -> ServiceResource:
+def create_boto3_resource(*, service: str, config: Optional[Config] = None, **kwargs):
     return boto3.resource(
-        service_name=service, config=config if config else CONFIG_DEFAULT, **kwargs
+        service_name=service, config=config if config else CONFIG_DEFAULT, **kwargs  # type: ignore
     )

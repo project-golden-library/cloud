@@ -49,13 +49,13 @@ def handler(
     context,
     ddb_client: DynamoDBClient = create_boto3_client(service="dynamodb"),
     ddb_resource: DynamoDBServiceResource = create_boto3_resource(service="dynamodb"),
-    sqs_client: SQSEvent = create_boto3_client(service="sqs"),
+    sqs_client: SQSClient = create_boto3_client(service="sqs"),
 ):
     env = load_environment(dataclass_type=EnvironmentVariables)
     table = ddb_resource.Table(name=env.table_name)
     url, next_id = generate_url(event=event)
     response = get_response(url=url)
-    articles = get_article_urls(resp=response.body)
+    articles = get_article_urls(body=response.body)
     put_articles(articles=articles, ddb_client=ddb_client, table=table)
     flag_finish = is_finish(article_urls=articles, resp=response)
     if flag_finish.is_finish:
@@ -69,6 +69,7 @@ def generate_url(*, event: SQSEvent) -> Tuple[str, str]:
     for record in event.records:
         next_id = record.body
         return f"https://e-hentai.org/?next={next_id}", next_id
+    raise Exception("no record")
 
 
 @logging_function(logger, log_return=True)
@@ -80,7 +81,9 @@ def get_response(*, url: str) -> HttpResponseWrapper:
 
 @logging_function(logger)
 def get_article_urls(*, body: bytes) -> List[str]:
-    pass
+    bs = BeautifulSoup(body, "html.parser")
+    anchors = bs.select("table.itg.gltc td.gl3c.glname a")
+    return [x.attrs["href"] for x in anchors]
 
 
 @logging_function(logger)
@@ -101,9 +104,7 @@ def is_finish(*, article_urls: List[str], resp: HttpResponseWrapper) -> FinishFl
 
 
 @logging_function(logger)
-def generate_next_id(*, articles: List[str]) -> Optional[str]:
-    if len(articles) == 0:
-        return None
+def generate_next_id(*, articles: List[str]) -> str:
     url = articles[-1]
     return url.split("/")[4]
 
@@ -115,7 +116,8 @@ def put_articles(*, articles: List[str], ddb_client: DynamoDBClient, table: Tabl
     for url in articles:
         try:
             option = {
-                "Item": {"url": url, "ConditionExpression": Attr("url").not_exists()}
+                "Item": {"url": url},
+                "ConditionExpression": Attr("url").not_exists(),
             }
             table.put_item(**option)
         except ddb_client.exceptions.ConditionalCheckFailedException:
@@ -134,11 +136,14 @@ def put_articles(*, articles: List[str], ddb_client: DynamoDBClient, table: Tabl
 
 @logging_function(logger)
 def put_next_id(*, queue_url: str, next_id: str, sqs_client: SQSClient):
+    option = None
     try:
         option = {"QueueUrl": queue_url, "MessageBody": next_id, "DelaySeconds": 5}
         sqs_client.send_message(**option)
     except Exception:
         logger.warning(
-            "failed to send_message", exc_info=True, extra={"additional_data"}
+            "failed to send_message",
+            exc_info=True,
+            extra={"additional_data": {"options": option}},
         )
         raise

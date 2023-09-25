@@ -21,6 +21,7 @@ resource "aws_lambda_event_source_mapping" "get_old_urls_01" {
   function_name    = module.get_old_urls_01.function_arn
   event_source_arn = aws_sqs_queue.queue_01.arn
   batch_size       = 1
+  enabled          = local.lambda.enabled
 }
 
 module "get_old_urls_02" {
@@ -46,6 +47,7 @@ resource "aws_lambda_event_source_mapping" "get_old_urls_02" {
   function_name    = module.get_old_urls_02.function_arn
   event_source_arn = aws_sqs_queue.queue_02.arn
   batch_size       = 1
+  enabled          = local.lambda.enabled
 }
 
 module "get_old_urls_03" {
@@ -71,6 +73,7 @@ resource "aws_lambda_event_source_mapping" "get_old_urls_03" {
   function_name    = module.get_old_urls_03.function_arn
   event_source_arn = aws_sqs_queue.queue_03.arn
   batch_size       = 1
+  enabled          = local.lambda.enabled
 }
 
 module "get_old_urls_04" {
@@ -96,6 +99,7 @@ resource "aws_lambda_event_source_mapping" "get_old_urls_04" {
   function_name    = module.get_old_urls_04.function_arn
   event_source_arn = aws_sqs_queue.queue_04.arn
   batch_size       = 1
+  enabled          = local.lambda.enabled
 }
 
 module "get_old_urls_05" {
@@ -121,6 +125,7 @@ resource "aws_lambda_event_source_mapping" "get_old_urls_05" {
   function_name    = module.get_old_urls_05.function_arn
   event_source_arn = aws_sqs_queue.queue_05.arn
   batch_size       = 1
+  enabled          = local.lambda.enabled
 }
 
 module "get_old_urls_06" {
@@ -146,6 +151,7 @@ resource "aws_lambda_event_source_mapping" "get_old_urls_06" {
   function_name    = module.get_old_urls_06.function_arn
   event_source_arn = aws_sqs_queue.queue_06.arn
   batch_size       = 1
+  enabled          = local.lambda.enabled
 }
 
 module "get_old_urls_07" {
@@ -171,6 +177,7 @@ resource "aws_lambda_event_source_mapping" "get_old_urls_07" {
   function_name    = module.get_old_urls_07.function_arn
   event_source_arn = aws_sqs_queue.queue_07.arn
   batch_size       = 1
+  enabled          = local.lambda.enabled
 }
 
 module "get_old_urls_08" {
@@ -196,6 +203,7 @@ resource "aws_lambda_event_source_mapping" "get_old_urls_08" {
   function_name    = module.get_old_urls_08.function_arn
   event_source_arn = aws_sqs_queue.queue_08.arn
   batch_size       = 1
+  enabled          = local.lambda.enabled
 }
 
 module "get_old_urls_09" {
@@ -221,6 +229,7 @@ resource "aws_lambda_event_source_mapping" "get_old_urls_09" {
   function_name    = module.get_old_urls_09.function_arn
   event_source_arn = aws_sqs_queue.queue_09.arn
   batch_size       = 1
+  enabled          = local.lambda.enabled
 }
 
 module "get_old_urls_10" {
@@ -246,4 +255,5 @@ resource "aws_lambda_event_source_mapping" "get_old_urls_10" {
   function_name    = module.get_old_urls_10.function_arn
   event_source_arn = aws_sqs_queue.queue_10.arn
   batch_size       = 1
+  enabled          = local.lambda.enabled
 }
