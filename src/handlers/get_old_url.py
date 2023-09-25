@@ -58,6 +58,7 @@ def handler(
     articles = get_article_urls(body=response.body)
     put_articles(articles=articles, ddb_client=ddb_client, table=table)
     flag_finish = is_finish(article_urls=articles, resp=response)
+    logger.info("flag_finish", extra={"additional_data": {"flag_finish": flag_finish}})
     if flag_finish.is_finish:
         return
     next_id = next_id if flag_finish.is_banned else generate_next_id(articles=articles)
