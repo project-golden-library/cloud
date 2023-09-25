@@ -17,6 +17,7 @@ boto3-stubs = {version = "1.28.50", extras = ["dynamodb", "s3", "sqs"]}
 # arn:aws:lambda:us-east-1:017000801446:layer:AWSLambdaPowertoolsPythonV2-Arm64:43
 aws-lambda-powertools = "2.24.0"
 feedparser = "6.0.10"
+beautifulsoup4 = "4.12.2"
 
 [build-system]
 requires = ["poetry-core"]

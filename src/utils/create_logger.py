@@ -1,12 +1,25 @@
+from base64 import b64decode
 from dataclasses import asdict, is_dataclass
 from decimal import Decimal
+from http.client import HTTPResponse
 from typing import Type
+from zlib import compress
 
 from aws_lambda_powertools import Logger
 from boto3.dynamodb.conditions import AttributeBase, ConditionBase
 
 
 def custom_default(obj):
+    if isinstance(obj, bytes):
+        try:
+            return str(obj)
+        except UnicodeDecodeError:
+            return b64decode(compress(obj, level=9)).decode()
+        except Exception as e:
+            return {
+                "type": str(type(obj)),
+                "error": {"type": str(type(e)), "msg": str(e)},
+            }
     if isinstance(obj, Decimal):
         return num if (num := int(obj)) == obj else float(str(obj))
     if isinstance(obj, ConditionBase):
@@ -15,6 +28,8 @@ def custom_default(obj):
         return obj.name
     if is_dataclass(obj):
         return str(obj) if isinstance(obj, Type) else asdict(obj)
+    if isinstance(obj, HTTPResponse):
+        return {"type": str(type(obj)), "code": obj.getcode(), "body": obj.read()}
     try:
         return {"type": str(type(obj)), "value": str(obj)}
     except Exception as e:

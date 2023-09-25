@@ -32,3 +32,12 @@ resource "aws_cloudwatch_event_target" "parse_feed" {
   arn  = module.parse_feed.alias_arn
   rule = aws_cloudwatch_event_rule.parse_feed.name
 }
+
+module "old_urls" {
+  source = "../old_urls"
+
+  artifact_s3_bucket = aws_s3_object.lambda_package.bucket
+  artifact_s3_key    = aws_s3_object.lambda_package.key
+  source_code_hash   = data.archive_file.lambda_package.output_base64sha256
+  table_name         = aws_dynamodb_table.urls.name
+}

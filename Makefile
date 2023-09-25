@@ -20,10 +20,15 @@ tf-format-modules-lambda-function:
 	cd terraform/modules/lambda_function && \
 	terraform fmt
 
+tf-format-modules-old-urls:
+	cd terraform/modules/old_urls && \
+	terraform fmt
+
 tf-format: \
 	tf-format-environment \
 	tf-format-modules-root \
 	tf-format-modules-lambda-function \
+	tf-format-modules-old-urls
 
 format: \
 	isort \

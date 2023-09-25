@@ -4,6 +4,7 @@ resource "aws_lambda_function" "function" {
   role          = var.role_arn
   runtime       = "python3.11"
   publish       = true
+  architectures = ["arm64"]
 
   s3_bucket        = var.artifact_s3_bucket
   s3_key           = var.artifact_s3_key
