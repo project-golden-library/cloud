@@ -3,6 +3,6 @@ locals {
     visibility_timeout = 30
   }
   lambda = {
-    enabled = true
+    enabled = false
   }
 }
