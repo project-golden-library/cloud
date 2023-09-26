@@ -95,7 +95,7 @@ def is_finish(*, article_urls: List[str], resp: HttpResponseWrapper) -> FinishFl
     if len(article_urls) > 0:
         flag_finish = False
 
-    bs = BeautifulSoup(resp.raw, "html.parser")
+    bs = BeautifulSoup(resp.body, "html.parser")
     tag = bs.select_one("#nb")
     if tag is None:
         flag_finish = False

@@ -12,7 +12,7 @@ from boto3.dynamodb.conditions import AttributeBase, ConditionBase
 def custom_default(obj):
     if isinstance(obj, bytes):
         try:
-            return str(obj)
+            return obj.decode()
         except UnicodeDecodeError:
             return b64decode(compress(obj, level=9)).decode()
         except Exception as e:
